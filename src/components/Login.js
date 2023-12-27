@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
+  const email = useRef(null);
+  const password = useRef(null);
   const [toggleSignIn, setToggleSignIn] = useState(true);
+  const [errMessage, setErrMessage] = useState("");
 
   const toggleSignInForm = () => {
     setToggleSignIn(!toggleSignIn);
+  };
+
+  const handleButtonClick = () => {
+    const message = checkValidData(email.current.value, password.current.value);
+    setErrMessage(message);
+    console.log(message);
   };
 
   return (
@@ -17,7 +27,10 @@ const Login = () => {
           alt="backgroundImg"
         />
       </div>
-      <form className="bg-black absolute p-12 w-3/12 my-36 mx-auto right-0 left-0 bg-opacity-80 rounded-sm ">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="bg-black absolute p-12 w-3/12 my-36 mx-auto right-0 left-0 bg-opacity-80 rounded-sm "
+      >
         <div className=" font-bold text-3xl py-4 text-white">
           {toggleSignIn ? "Sign In" : "Sign Up"}
         </div>
@@ -25,29 +38,36 @@ const Login = () => {
           <input
             type="text"
             placeholder="Full Name"
-            className="p-4 m-2 w-full text-md rounded-sm bg-gray-800 focus:outline-none"
+            className="p-4 m-2 w-full text-md text-white rounded-sm bg-gray-800 focus:outline-none"
           />
         )}
 
         <input
+          ref={email}
           type="text"
           placeholder="Email or phone number"
-          className="p-4 m-2 w-full text-md rounded-md bg-gray-800 focus:outline-none"
+          className="p-4 m-2 w-full text-md text-white rounded-md bg-gray-800 focus:outline-none"
         />
         <input
+          ref={password}
           type="password"
           placeholder="password"
-          className="p-4 m-2 w-full text-md rounded-md bg-gray-800 focus:outline-none"
+          className="p-4 m-2 w-full text-md text-white rounded-md bg-gray-800 focus:outline-none"
         />
         {!toggleSignIn && (
           <input
             type="password"
             placeholder="confirm password"
-            className="p-4 m-2 w-full text-md rounded-md bg-gray-800 focus:outline-none"
+            className="p-4 m-2 w-full text-md text-white rounded-md bg-gray-800 focus:outline-none"
           />
         )}
 
-        <button className="p-2 m-2 bg-red-600 text-white w-full mt-5 rounded-sm">
+        <p className="text-white text-center mt-2">{errMessage}</p>
+
+        <button
+          onClick={handleButtonClick}
+          className="p-2 m-2 bg-red-600 text-white w-full mt-5 rounded-sm"
+        >
           {toggleSignIn ? "Sign In" : "Sign Up"}
         </button>
         <p
