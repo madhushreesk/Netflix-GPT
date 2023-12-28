@@ -3,8 +3,10 @@ import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 
 const Login = () => {
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+
   const [toggleSignIn, setToggleSignIn] = useState(true);
   const [errMessage, setErrMessage] = useState("");
 
@@ -15,7 +17,6 @@ const Login = () => {
   const handleButtonClick = () => {
     const message = checkValidData(email.current.value, password.current.value);
     setErrMessage(message);
-    console.log(message);
   };
 
   return (
@@ -36,6 +37,7 @@ const Login = () => {
         </div>
         {!toggleSignIn && (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="p-4 m-2 w-full text-md text-white rounded-sm bg-gray-800 focus:outline-none"
@@ -62,7 +64,7 @@ const Login = () => {
           />
         )}
 
-        <p className="text-white text-center mt-2">{errMessage}</p>
+        <p className="text-red-700 text-center mt-2">{errMessage}</p>
 
         <button
           onClick={handleButtonClick}
