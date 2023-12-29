@@ -33,7 +33,7 @@ const Login = () => {
         className="bg-black absolute p-12 w-3/12 my-36 mx-auto right-0 left-0 bg-opacity-80 rounded-sm "
       >
         <div className=" font-bold text-3xl py-4 text-white">
-          {toggleSignIn ? "Sign In" : "Sign Up"}
+          {toggleSignIn ? "Sign In" : "Sign Up."}
         </div>
         {!toggleSignIn && (
           <input
